@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ question.question }}
+<br>
+{% if error_message %}
+<br> {{ error_message }}
+{% endif %}
+{% for answer in question.answers.all %}
+<p
+    {% if question.right_answer == answer.id %}
+       style="color:green;"
+    {% elif answer_id != answer.id %}
+       style="color:black;"
+    {% else %}
+       style="color:red;"
+    {% endif %}
+ > {{answer.answer}} </p>
+{% endfor %}
+{% if prev_question_id %}
+<a href=" {% url 'tsts:tst_questions' tst_item.id prev_question_id %}"> << </a>
+{% endif %}
+&emsp;
+{% if next_question_id %}
+<a href=" {% url 'tsts:tst_questions' tst_item.id next_question_id %}"> >> </a>
+{% endif %}
+<br>
+<br>
+<a href=" {% url 'tsts:tst_quit' tst_item.id %}"> Завершить тест </a>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if not tst_item.status %}
+<form action="{% url 'tsts:tst_questions' tst_item.id question.id %}" method="post">
+{% csrf_token %}
+{{ question.question }}
+{% if error_message %}
+    <br> {{ error_message }}
+{% endif %}
+<br>
+{% for answer in question.answers.all %}
+    <p>
+    <input type="radio" name="choice" id="answer{{ forloop.counter }}" value="{{ answer.id }}">
+    <label for="answer{{ forloop.counter }}">{{ answer.answer }}</label><br>
+    </p>
+{% endfor %}
+<input type="submit" value="Ответить">
+</form>
+{% if prev_question_id %}
+    <a href=" {% url 'tsts:tst_questions' tst_item.id prev_question_id %}"> << </a>
+{% endif %}
+&emsp;
+{% if next_question_id %}
+    <a href=" {% url 'tsts:tst_questions' tst_item.id next_question_id %}"> >> </a>
+{% endif %}
+<br>
+<br>
+<a href=" {% url 'tsts:tst_quit' tst_item.id %}"> Завершить тест </a>
+{% endif %}
+{% endblock content %}
+
+
+

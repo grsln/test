@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+Всего вопросов:{{ questions_count }}
+<br>
+Правильных ответов:{{ right_answer_count }}
+<br>
+<a href=" {% url 'tsts:index' %}"> Начать новый тест </a>
+{% endblock content %}

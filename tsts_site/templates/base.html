@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- //Meta tag Keywords -->
+    <title> {% block title %} ind {% endblock title %} </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" type="text/css">
+</head>
+<body>
+   {% if user.is_authenticated %}
+     <li>Пользователь: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Выход</a></li>
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Вход</a></li>
+   {% endif %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+</body>
+</html>
