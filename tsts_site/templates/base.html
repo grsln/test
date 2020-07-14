@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" type="text/css">
 </head>
 <body>
+<div class="container-fluid">
    {% if user.is_authenticated %}
      <li>Пользователь: {{ user.get_username }}</li>
      <li><a href="{% url 'logout'%}?next={{request.path}}">Выход</a></li>
@@ -19,6 +20,6 @@
     {% block content %}
 
     {% endblock content %}
-
+</div>
 </body>
 </html>

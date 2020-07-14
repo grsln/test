@@ -132,8 +132,6 @@ class TCreateView(APIView):
         serializer = TSerializer(t, many=False)
         return Response({"T": serializer.data})
 
-
-
 # class TView(RetrieveUpdateAPIView):
 #     queryset = T.objects.all()
 #     serializer_class = TSerializer

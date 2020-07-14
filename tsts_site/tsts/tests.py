@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import Question, random_list
 
+
 class QuestionModelTests(TestCase):
 
     def test_random_list(self):
@@ -11,4 +12,3 @@ class QuestionModelTests(TestCase):
         question_list = random_list(Question, 3)
 
         self.assertIs(bool(question_list), True)
-
