@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import DetailView
-from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import QuestionSerializer, AnswerSerializer, TSerializer, TResultSerializer
@@ -106,27 +106,33 @@ class QuestionAnswersView(APIView):
 
 
 class TView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
-        t = T.objects.filter(pk=pk)
-        serializer = TSerializer(t, many=True)
+        t = T.objects.get(pk=pk)
+        serializer = TSerializer(t, many=False)
         return Response({"T": serializer.data})
 
     def put(self, request, pk):
         saved_t = get_object_or_404(T.objects.all(), pk=pk)
         if not saved_t.status:
             request_t = request.data.get('T')
-            answers_list = request_t[0]['t_result']
+            answers_list = request_t['t_result']
             for answers_item in answers_list:
                 t_result_item = saved_t.t_result_set.get(id=answers_item['id'])
                 serializer = TResultSerializer(instance=t_result_item, data=answers_item, partial=True)
                 if serializer.is_valid(raise_exception=True):
                     serializer.save()
                     t_result_item.t_question_answered(answer_id=answers_item['answered_id'])
+            saved_t.status = True
+            saved_t.save()
             return Response({"success": "Test save successfully"})
         return Response({"error": "Test was saved"})
 
 
 class TCreateView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         t = T.objects.create(t_date=timezone.now(), status=False)
         serializer = TSerializer(t, many=False)

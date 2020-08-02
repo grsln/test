@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
     <!-- //Meta tag Keywords -->
-    <title> {% block title %} ind {% endblock title %} </title>
+    <title> {% block title %} Тесты {% endblock title %} </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" type="text/css">
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
    {% if user.is_authenticated %}
      <li>Пользователь: {{ user.get_username }}</li>
      <li><a href="{% url 'logout'%}?next={{request.path}}">Выход</a></li>

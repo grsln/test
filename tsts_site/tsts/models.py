@@ -132,8 +132,9 @@ class T_Result(models.Model):
         return '#id {}'.format(self.id)
 
     def t_question_answered(self, answer_id):
-        self.right_answered = answer_id == self.question.right_answer
-        self.answered = True
-        self.answered_id = answer_id
-        self.save()
+        if not self.answered:
+            self.right_answered = answer_id == self.question.right_answer
+            self.answered = True
+            self.answered_id = answer_id
+            self.save()
         return self

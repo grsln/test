@@ -1,28 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
-{{ question.question }}
-<br>
-{% if error_message %}
-<br> {{ error_message }}
-{% endif %}
-{% for answer in question.answers.all %}
-<p
-    {% if question.right_answer == answer.id %}
-       style="color:green;"
-    {% elif answer_id != answer.id %}
-       style="color:black;"
-    {% else %}
-       style="color:red;"
-    {% endif %}
- > {{answer.answer}} </p>
-{% endfor %}
-{% if prev_question_id %}
-<a href=" {% url 'tsts:tst_questions' tst_item.id prev_question_id %}"> << </a>
-{% endif %}
-&emsp;
-{% if next_question_id %}
-<a href=" {% url 'tsts:tst_questions' tst_item.id next_question_id %}"> >> </a>
-{% endif %}
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col text-right">
+                {% if prev_question_id %}
+                <a class="btn btn-outline-primary btn-block"
+                   href=" {% url 'tsts:tst_questions' tst_item.id prev_question_id %}"
+                   role="button"><<</a>
+                {% endif %}
+            </div>
+            <div class="col text-left">
+                {% if next_question_id %}
+                <a class="btn btn-outline-primary btn-block"
+                   href=" {% url 'tsts:tst_questions' tst_item.id next_question_id %}"
+                   role="button">>></a>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <p>{{ question.question }}</p>
+        <br>
+        {% if error_message %}
+        <br> {{ error_message }}
+        {% endif %}
+        {% for answer in question.answers.all %}
+        {% if question.right_answer == answer.id %}
+        <p style="color:green;">
+            {% elif answer_id != answer.id %}
+        <p style="color:black;">
+            {% else %}
+        <p style="color:red;">
+            {% endif %}
+            {{answer.answer}} </p>
+        {% endfor %}
+
+
+    </div>
+    <div class="col-sm-2"></div>
+</div>
 <br>
 <br>
 <a href=" {% url 'tsts:tst_quit' tst_item.id %}"> Завершить тест </a>

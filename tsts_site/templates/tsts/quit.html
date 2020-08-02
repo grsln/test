@@ -1,9 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<br>
-Всего вопросов:{{ questions_count }}
-<br>
-Правильных ответов:{{ right_answer_count }}
-<br>
-<a href=" {% url 'tsts:index' %}"> Начать новый тест </a>
+
+<div class="row">
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4 text-left">
+        <div class="row">
+            <div class="col text-left">Всего вопросов:</div>
+            <div class="col text-right">{{ questions_count }}</div>
+        </div>
+        <div class="row">
+            <div class="col text-left">Правильных ответов:</div>
+            <div class="col text-right">{{ right_answer_count }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-outline-primary btn-block"
+                   href="{% url 'tsts:index' %}"
+                   role="button">Начать новый тест</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+    </div>
+</div>
+
 {% endblock content %}

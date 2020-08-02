@@ -8,5 +8,6 @@ urlpatterns = [
     path("<int:pk>/quit/", views.TstQuitView.as_view(), name='tst_quit'),
     path("", views.index, name='index'),
     path("api/t/<int:pk>/", views.TView.as_view()),
-    path("api/t/create/", views.TCreateView.as_view())
+    path("api/t/create/", views.TCreateView.as_view()),
+
 ]

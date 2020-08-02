@@ -2,38 +2,42 @@
 
 {% block content %}
 
-{% if form.errors %}
-  <p>Пользователь или пароль неверные. Пожалуйста, повторите ввод.</p>
-{% endif %}
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        {% if form.errors %}
+        <p>Пользователь или пароль неверные. Пожалуйста, повторите ввод.</p>
+        {% endif %}
 
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-    <p>Для начала теста войдите в аккаунт.</p>
-  {% endif %}
-{% endif %}
+        {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+        {% else %}
+        <p>Для начала теста войдите в аккаунт.</p>
+        {% endif %}
+        {% endif %}
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
+            <div class="row">
+                <div class="col">{{ form.username.label_tag }}</div>
+                <div class="col">{{ form.username }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">{{ form.password.label_tag }}</div>
+                <div class="col-sm-6">{{ form.password }}</div>
+            </div>
 
-<tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-<tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</tr>
-</table>
+            <input type="submit" class="btn btn-primary" value="Вход"/>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
 
+        {# Assumes you setup the password_reset view in your URLconf #}
+        <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+        <p><a href="{% url 'accounts:signup' %}">Зарегистрироваться</a></p>
+    </div>
+    <div class="col"></div>
+</div>
 
-<input type="submit" class="btn btn-primary" value="Вход" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
-<p><a href="{% url 'accounts:signup' %}">Зарегистрироваться</a></p>
 {% endblock %}

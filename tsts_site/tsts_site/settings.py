@@ -27,7 +27,6 @@ LOGIN_REDIRECT_URL = '/'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
-# SECRET_KEY = ')ag(-at$*8#g_1s6wrr1afvmwz^lqx5%1!m9h2oui9w^g83*8w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -61,6 +60,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 ROOT_URLCONF = 'tsts_site.urls'
 
 TEMPLATES = [
